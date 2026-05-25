@@ -120,7 +120,7 @@ img { display: block; max-width: 100%; }
 }
 .wash-1 { width: 540px; height: 540px; top: -12%; left: -8%;  background: radial-gradient(circle, rgba(46,169,230,0.45) 0%, transparent 70%); }
 .wash-2 { display: none; }
-.wash-3 { display: none; }
+.wash-3 { display: block; width: 480px; height: 480px; bottom: -10%; right: -6%; background: radial-gradient(circle, rgba(0,116,127,0.30) 0%, transparent 70%); }
 
 .grain {
   position: fixed; inset: 0;
@@ -2805,7 +2805,7 @@ img { display: block; max-width: 100%; }
    SLIDE INDEX POPUP
    ───────────────────────────────────────────────────────────────────────── */
 .index-toggle {
-  position: absolute; top: 24px; left: 52px;
+  position: absolute; top: 22px; left: 24px;
   width: 34px; height: 34px;
   border-radius: 8px;
   background: var(--brass-soft);
@@ -2842,8 +2842,8 @@ img { display: block; max-width: 100%; }
   background: var(--paper);
   box-shadow: 4px 0 48px rgba(6,27,48,0.28);
   display: flex; flex-direction: column;
-  transform: translateX(-30px);
-  transition: transform 350ms var(--ease-deep);
+  transform: translateX(-100%);
+  transition: transform 380ms var(--ease-deep);
   overflow: hidden;
 }
 .slide-index.open .slide-index__panel { transform: translateX(0); }
@@ -2927,6 +2927,10 @@ img { display: block; max-width: 100%; }
 .slide-index__bot [data-lucide] { flex-shrink: 0; color: var(--cool-1); width: 20px; height: 20px; }
 .slide-index__bot [data-lucide]:last-child { margin-left: auto; color: var(--ink-muted); width: 14px; height: 14px; }
 
+/* Section-label accent overrides for new slides */
+#s-credits .section-label::after { background: var(--brass); }
+#s-soporte .section-label::after { background: var(--cool-4); }
+
 /* ─────────────────────────────────────────────────────────────────────────
    CREDITS / CUSTOMIZATION SLIDE (s-credits)
    ───────────────────────────────────────────────────────────────────────── */
@@ -2962,6 +2966,7 @@ img { display: block; max-width: 100%; }
   border-color: var(--brass);
   background: linear-gradient(160deg, var(--limestone) 0%, var(--paper) 100%);
 }
+.credit-tier.tier-pro:hover { transform: translateY(-6px); box-shadow: var(--shadow-sea), 0 0 0 1px var(--brass); }
 .credit-tier__badge {
   font-family: "IBM Plex Mono", monospace;
   font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase;
@@ -2981,6 +2986,7 @@ img { display: block; max-width: 100%; }
   border-bottom: 1px solid var(--rule);
 }
 .credit-tier__price strong { font-size: 26px; color: var(--ink); font-family: "Fraunces", serif; font-style: italic; }
+.credit-tier__currency { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-muted); vertical-align: super; font-style: normal; }
 .credit-tier__features {
   list-style: none; flex: 1;
   display: flex; flex-direction: column; gap: 10px;
@@ -3063,11 +3069,12 @@ img { display: block; max-width: 100%; }
 .support-submit {
   width: 100%;
   padding: 14px 28px;
-  background: linear-gradient(135deg, var(--cool-2), var(--cool-4));
-  color: white;
+  background: linear-gradient(135deg, var(--brass), var(--brass-warm));
+  color: var(--abyss);
   border: none; border-radius: 10px;
-  font-family: "Inter", sans-serif;
-  font-size: 13px; font-weight: 600; letter-spacing: 0.04em;
+  font-family: "Fraunces", serif;
+  font-style: italic; font-weight: 500;
+  font-size: 15px; letter-spacing: 0.01em;
   cursor: pointer;
   transition: opacity 200ms, transform 150ms;
   display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -3099,22 +3106,27 @@ img { display: block; max-width: 100%; }
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 320px; height: 580px;
+  width: 420px; height: 800px;
   border-radius: 44px;
-  background: radial-gradient(ellipse at center, rgba(46,169,230,0.18) 0%, transparent 70%);
-  filter: blur(28px);
+  background: radial-gradient(ellipse at center,
+    rgba(46,169,230,0.18) 0%,
+    rgba(201,169,97,0.12) 40%,
+    transparent 70%);
+  filter: blur(32px);
   z-index: 0;
   animation: phoneGlowPulse 4s ease-in-out infinite;
   pointer-events: none;
 }
 @keyframes phoneGlowPulse {
-  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+  0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.06); }
 }
+.sim-stage__phone-col { overflow: visible !important; }
 .sim-notification {
   position: absolute;
   top: -30px; right: -20px;
-  background: white;
+  background: rgba(253,252,248,0.95);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--rule);
   border-radius: 12px;
   padding: 8px 12px;
@@ -3123,7 +3135,8 @@ img { display: block; max-width: 100%; }
   color: var(--ink-body);
   box-shadow: var(--shadow-card);
   display: flex; align-items: center; gap: 8px;
-  animation: notifFloat 6s ease-in-out infinite;
+  will-change: transform;
+  animation: notifEnter 0.5s var(--ease-deep) 1.2s both, notifFloat 6s ease-in-out 1.7s infinite;
   z-index: 10;
   white-space: nowrap;
   pointer-events: none;
@@ -3135,11 +3148,15 @@ img { display: block; max-width: 100%; }
 }
 .sim-notification-2 {
   top: auto; bottom: -28px; right: -10px; left: auto;
-  animation-delay: 3s;
+  animation: notifEnter 0.5s var(--ease-deep) 2.4s both, notifFloat 6s ease-in-out 2.9s infinite;
+}
+@keyframes notifEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes notifFloat {
-  0%, 100% { transform: translateY(0) rotate(-1deg); }
-  50% { transform: translateY(-6px) rotate(1deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
 @keyframes notifDot {
   0%, 100% { opacity: 1; } 50% { opacity: 0.3; }
@@ -3292,7 +3309,7 @@ img { display: block; max-width: 100%; }
     </div>
     <div class="slide-index__list" id="slideIndexList" role="list"></div>
     <a href="https://t.me/HHHMisionDigitalBot" target="_blank" rel="noopener noreferrer" class="slide-index__bot">
-      <i data-lucide="bot"></i>
+      <i data-lucide="bot" aria-hidden="true"></i>
       <div>
         <div class="slide-index__bot-title">Hotel Hospitality Helper Bot</div>
         <div class="slide-index__bot-sub">Chateá con el asistente en Telegram</div>
@@ -4674,7 +4691,7 @@ img { display: block; max-width: 100%; }
     <div class="credit-tier tier-open">
       <div class="credit-tier__badge">Tier · Abierto</div>
       <div class="credit-tier__name">Conectado</div>
-      <div class="credit-tier__price"><strong>50</strong> créditos / mes</div>
+      <div class="credit-tier__price"><span class="credit-tier__currency">USD </span><strong>50</strong> créditos / mes</div>
       <ul class="credit-tier__features">
         <li>Portal del huésped con tu marca</li>
         <li>Órdenes de trabajo ilimitadas</li>
@@ -4690,7 +4707,7 @@ img { display: block; max-width: 100%; }
     <div class="credit-tier tier-pro">
       <div class="credit-tier__badge">Tier · Profesional · Más elegido</div>
       <div class="credit-tier__name">Privado</div>
-      <div class="credit-tier__price"><strong>120</strong> créditos / mes</div>
+      <div class="credit-tier__price"><span class="credit-tier__currency">USD </span><strong>120</strong> créditos / mes</div>
       <ul class="credit-tier__features">
         <li>Todo lo del plan Conectado</li>
         <li>Dominio propio del portal</li>
@@ -4707,7 +4724,7 @@ img { display: block; max-width: 100%; }
     <div class="credit-tier tier-elite">
       <div class="credit-tier__badge">Tier · Elite</div>
       <div class="credit-tier__name">Aislado</div>
-      <div class="credit-tier__price"><strong>280</strong> créditos / mes</div>
+      <div class="credit-tier__price"><span class="credit-tier__currency">USD </span><strong>280</strong> créditos / mes</div>
       <ul class="credit-tier__features">
         <li>Todo lo del plan Privado</li>
         <li>Servidor dedicado en tu infraestructura</li>
@@ -4731,6 +4748,9 @@ img { display: block; max-width: 100%; }
 <section class="slide" id="s-soporte" data-label="Soporte Técnico">
   <div class="slide-num">17</div>
   <div class="section-label">Soporte Técnico</div>
+  <div class="slide-bg-photo" aria-hidden="true">
+    <img src="https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1600&auto=format&fit=crop&q=80" alt="" loading="lazy">
+  </div>
 
   <div class="eyebrow reveal-up">Estamos acá</div>
   <h2 class="h2 reveal-up" data-delay="0.15">¿Algo no funciona como <span class="em">esperabas?</span></h2>
@@ -5603,11 +5623,13 @@ img { display: block; max-width: 100%; }
       slideIndex.classList.add('open');
       slideIndex.setAttribute('aria-hidden', 'false');
       indexToggle.setAttribute('aria-expanded', 'true');
+      setTimeout(() => { if (indexClose) indexClose.focus(); }, 60);
     }
     function closeIndexPanel() {
       slideIndex.classList.remove('open');
       slideIndex.setAttribute('aria-hidden', 'true');
       indexToggle.setAttribute('aria-expanded', 'false');
+      indexToggle.focus();
     }
 
     indexToggle.addEventListener('click', () => {
